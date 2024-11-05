@@ -43,11 +43,10 @@
                 <li>Partagez votre resultat en réseaux sociaux</li>
                 <li>Gratuit</li>
             </ul>
-            <a href="#quiz"><button class="btn_about">Démarrer le test </button></a>
-
+            <button class="btn_about">Démarrer le test </button>
         </div>
     </section>
-    <section class="quiz" id="quiz">
+    <section class="quiz" id="quiz" style="display: none;">
         <div class="survey-container">
             <div class="timer">temps restant : 10 s</div>
     
@@ -56,33 +55,16 @@
             </div>
     
             <ul class="options-list">
-                <li class="option-item">
-                    <label>
-                        <input type="checkbox" class="custom-checkbox">
-                        Très bien
-                    </label>
-                </li>
-                <li class="option-item">
-                    <label>
-                        <input type="checkbox" class="custom-checkbox">
-                        Je vais bien
-                    </label>
-                </li>
-                <li class="option-item">
-                    <label>
-                        <input type="checkbox" class="custom-checkbox">
-                        Ça va bien
-                    </label>
-                </li>
+                <!-- Options will be populated here by JavaScript -->
             </ul>
     
             <div class="footer">
-                <span class="page-number">1/20</span>
-                <button class="next-button">suivant</button>
+                <span class="page-number">1/2</span> 
+                <button class="next-button" style="display: none;">Suivant</button>
             </div>
         </div>
     </section>
 
-    
+    <script src="main.js"></script>
 </body>
 </html>

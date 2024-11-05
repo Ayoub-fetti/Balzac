@@ -4,10 +4,11 @@
     font-family: "Itim", cursive;
     margin: 0;
 }
-.header{
+.header {
     display: flex;
-    justify-content: space-around;
-    height: 50px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
 }
 .list{
     list-style: none;
@@ -146,6 +147,9 @@ a:hover{
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px;
+    height: 100vh;
+
 }
 
 .survey-container {
@@ -161,19 +165,21 @@ a:hover{
 .question-header {
     border-bottom: 1px solid #0084FF;
     padding-bottom: 15px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     padding-top: 20px;
 }
 
 .options-list {
     list-style: none;
     padding: 0;
+    list-style-type: none;
 }
 
 .option-item {
-    margin: 15px 0;
+    margin: 10px 0;
     display: flex;
     align-items: center;
+    
 }
 
 
@@ -197,10 +203,11 @@ a:hover{
     background-color:#0084FF;
     color: #fff;
     border: none;
-    padding: 8px 16px;
     border-radius: 5px;
     cursor: pointer;
     margin-bottom: 20px;
+    margin-top: 20px;
+    padding: 10px;
 }
 .next-button:hover{
     background-color: #D9D9D9;
