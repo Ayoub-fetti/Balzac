@@ -290,6 +290,25 @@ a:hover{
     background-color: white;
     border: 1px solid #0084FF;
   }
+  .accueil{
+    margin-top: 30px;
+    background-color: #0084FF;
+    color: #fff;
+    width: 180px;
+    height: 50px;
+    padding: 10px 20px; 
+    text-align: center; 
+    text-decoration: none; 
+    font-size: 16px; 
+    cursor: pointer; 
+    border-radius: 20px; 
+    border: none;
+  }
+  .accueil:hover{
+    color: #0084FF;
+    background-color: white;
+    border: 1px solid #0084FF;
+  }
   .certificate{
     background-color: #E9FBFF;
     width: 25%;

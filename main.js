@@ -1,3 +1,8 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const resultSection = document.querySelector('.result');
+    resultSection.style.display = 'none'; // Cacher la section des résultats au début
+});
+
 const questions = [
     {
         question: "Quelle est la capitale de la France ?",
@@ -181,6 +186,8 @@ function nextQuestion() {
 document.querySelector('.btn_about').addEventListener('click', startQuiz);
 document.querySelector('.next-button').addEventListener('click', nextQuestion);
 document.querySelector('.redemarer').addEventListener('click', startQuiz);
+// document.querySelector('.accueil').addEventListener('click', startQuiz);
+
 
 
 
@@ -252,6 +259,10 @@ document.querySelector('.redemarer').addEventListener('click', function(e) {
     scrollToSection('quiz');
 });
 
+document.querySelector('.accueil').addEventListener('click', function(e) {
+    e.preventDefault(); // pour le botton home 
+    scrollToSection('home');
+});
 
 // ************************fonction pour timer***********************
 let timer;
