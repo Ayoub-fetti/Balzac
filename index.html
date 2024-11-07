@@ -28,7 +28,7 @@
             <p class="grand_prg">Passez le test de français Balzac et obtenez <br>
                 une évaluation de votre niveau. <br> 
                 N'importe où, n'importe quand.</p>
-            <a href="#about"><button class="button_home">Testez votre français maintenant</button></a>
+            <button class="button_home">Testez votre français maintenant</button>
         </div>
         <div class="svg_home">
             <img src="images/home_svg.svg" alt="svg" style="height: 470px; width:700px ;">
@@ -43,12 +43,13 @@
                 <li>Partagez votre resultat en réseaux sociaux</li>
                 <li>Gratuit</li>
             </ul>
-            <button class="btn_about">Démarrer le test </button>
+            <button class="btn_about">Démarrer le test</button>
         </div>
     </section>
-    <section class="quiz" id="quiz" style="display: none;">
+    <section class="quiz" id="quiz">
+        <div class="timer">Temps restant : 20 s</div>
         <div class="survey-container">
-            <div class="timer">temps restant : 10 s</div>
+            <!-- <div class="timer">temps restant : 10 s</div> -->
     
             <div class="question-header">
                 <h2>1. Comment allez-vous ?</h2>
@@ -64,6 +65,24 @@
             </div>
         </div>
     </section>
+    <section class="result">
+        <div class="certificate">
+            <h1 class="votre">Votre résultat :</h1>
+            <span style="font-weight: 600; font-size: 30px;">18/20</span>
+            <h1 class="good">Réponses correctes :</h1>
+            <span style="font-weight: 600;font-size: 30px;">8</span>
+            <h1 class="bad">Réponses incorrectes :</h1>
+            <span style="font-weight: 600;font-size: 30px;">2</span>
+            <h1 class="level">Votre niveau :</h1>
+            <span style="font-weight: 600;font-size: 30px;">B2</span>
+        </div>
+        <button class="redemarer">Redémarrer le test</button>
+    </section>
+    
+      <footer>
+        <p class="prg_footer">© 2024 Ayoub Fetti. Tous droits réservés.</p>
+      </footer>
+
 
     <script src="main.js"></script>
 </body>

@@ -99,50 +99,73 @@ let score = 0;
 function startQuiz() {
     score = 0;
     currentQuestionIndex = 0;
-    document.querySelector('.quiz').style.display = 'flex'; // Show quiz section
+    document.querySelector('.quiz').style.display = 'flex';
     showQuestion();
 }
+
+function checkAnswer(selectedOption) {
+    clearInterval(timer);
+    const currentQuestion = questions[currentQuestionIndex];
+    const optionButtons = document.querySelectorAll('.option-item');
+    const nextButton = document.querySelector('.next-button');
+    
+    optionButtons.forEach(button => {
+        button.disabled = true;
+        if (button.textContent === currentQuestion.answer) {
+            button.classList.add('correct');
+        } else if (button.textContent === selectedOption) {
+            button.classList.add('incorrect');
+        }
+    });
+
+    if (selectedOption === currentQuestion.answer) {
+        score += 2; // Attribue 2 points par réponse correcte
+    }
+
+    nextButton.style.display = 'block';
+}
+
 
 // Function pour la premier question
 function showQuestion() {
     const questionHeader = document.querySelector('.question-header h2');
     const optionsList = document.querySelector('.options-list');
     const nextButton = document.querySelector('.next-button');
-    optionsList.innerHTML = ''; // Clear previous options
-    nextButton.style.display = 'none'; // Hide next button initially
+    
+    // Vider la liste des options précédentes
+    optionsList.innerHTML = '';
+    
+    // Cacher le bouton suivant
+    nextButton.style.display = 'none';
 
-    const currentQuestion = questions[currentQuestionIndex];
-    questionHeader.innerText = currentQuestion.question;
-
-    currentQuestion.options.forEach(option => {
-        const li = document.createElement('li');
-        li.className = 'option-item';
-        li.innerHTML = `
-            <label>
-                <input type="radio" name="option" class="custom-radio" value="${option}">
-                ${option}
-            </label>
-        `;
-        li.querySelector('input').addEventListener('change', () => {
-            nextButton.style.display = 'block'; // Show next button when an option is selected
+    // Vérifier si nous avons encore des questions
+    if (currentQuestionIndex < questions.length) {
+        const currentQuestion = questions[currentQuestionIndex];
+        
+        // Afficher la question
+        questionHeader.textContent = currentQuestion.question;
+        
+        // Creer et afficher les options
+        currentQuestion.options.forEach(option => {
+            const button = document.createElement('button');
+            button.className = 'option-item';
+            button.textContent = option;
+            button.addEventListener('click', () => checkAnswer(option));
+            optionsList.appendChild(button);
         });
-        optionsList.appendChild(li);
-    });
+
+        // Mettre à jour le numéro de la question
+        document.querySelector('.page-number').textContent = 
+            `${currentQuestionIndex + 1}/${questions.length}`;
+    }
+    clearInterval(timer);
+    timeLeft = 20;
+    updateTimer();
+    startTimer();
 }
 
 // Function pour passer a la question suivant
 function nextQuestion() {
-    const selectedOption = document.querySelector('input[name="option"]:checked');
-    if (!selectedOption) {
-        alert("Veuillez sélectionner une réponse !");
-        return;
-    }
-
-    // Store the answer 
-    const userAnswer = selectedOption.value;
-    // You can store user answers in an array if you want to process them later
-    // userAnswers.push(userAnswer);
-
     currentQuestionIndex++;
 
     if (currentQuestionIndex < questions.length) {
@@ -152,19 +175,100 @@ function nextQuestion() {
     }
 }
 
-// Function pour montrer le result
-function showResult() {
-    document.querySelector('.quiz').style.display = 'none'; // Hide quiz section
-    
-    // Calculate the score here
-    score = questions.reduce((acc, question, index) => {
-        const userAnswer = document.querySelector(`input[name="option"]:checked`).value;
-        return acc + (userAnswer === question.answer ? 1 : 0);
-    }, 0);
 
-    alert(`Votre score final est ${score} sur ${questions.length}`);
-}
 
 // Event listeners
 document.querySelector('.btn_about').addEventListener('click', startQuiz);
 document.querySelector('.next-button').addEventListener('click', nextQuestion);
+document.querySelector('.redemarer').addEventListener('click', startQuiz);
+
+
+
+
+// fonction pour le scroll 
+function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+// fonction pour afficher le resultat 
+function showResult() {
+    clearInterval(timer);
+    const quizSection = document.querySelector('.quiz');
+    const resultSection = document.querySelector('.result');
+    const certificateDiv = resultSection.querySelector('.certificate');
+    
+    quizSection.style.display = 'none';
+    resultSection.style.display = 'flex';
+
+    const totalQuestions = questions.length;
+    const maxScore = totalQuestions * 2;
+    const correctAnswers = score / 2;
+    const incorrectAnswers = totalQuestions - correctAnswers;
+    const level = determineLevel(score);
+
+    certificateDiv.innerHTML = `
+        <h1 class="votre">Votre résultat :</h1>
+        <span style="font-weight: 600; font-size: 30px;">${score}/${maxScore}</span>
+        <h1 class="good">Réponses correctes :</h1>
+        <span style="font-weight: 600;font-size: 30px;">${correctAnswers}</span>
+        <h1 class="bad">Réponses incorrectes :</h1>
+        <span style="font-weight: 600;font-size: 30px;">${incorrectAnswers}</span>
+        <h1 class="level">Votre niveau :</h1>
+        <span style="font-weight: 600;font-size: 30px;">${level}</span>
+    `;
+
+    const restartButton = document.querySelector('.redemarer');
+    restartButton.addEventListener('click', startQuiz);
+}
+
+// fonction pour determiner le level
+function determineLevel(score) {
+    if (score <= 4) return "A1";
+    if (score <= 11) return "A2";
+    if (score <= 15) return "B1";
+    if (score <= 17) return "B2";
+    if (score <= 19) return "C1";
+    return "C2";
+}
+
+
+
+document.querySelector('.button_home').addEventListener('click', function(e) {
+    e.preventDefault(); // pour le botton home 
+    scrollToSection('about');
+});
+
+document.querySelector('.btn_about').addEventListener('click', function(e) {
+    e.preventDefault(); // pour le botton cart 
+    scrollToSection('quiz');
+    startQuiz();
+});
+
+document.querySelector('.redemarer').addEventListener('click', function(e) {
+    e.preventDefault(); // pour le botton home 
+    scrollToSection('quiz');
+});
+
+
+// ************************fonction pour timer***********************
+let timer;
+let timeLeft = 20;
+
+function updateTimer() {
+    document.querySelector('.timer').textContent = `Temps restant : ${timeLeft} s`;
+}
+
+function startTimer() {
+    timer = setInterval(() => {
+        timeLeft--;
+        updateTimer();
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            nextQuestion();
+        }
+    }, 1000);
+}
+
