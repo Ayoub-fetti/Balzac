@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     const resultSection = document.querySelector('.result');
-    resultSection.style.display = 'none'; // Cacher la section result
+    resultSection.style.display = 'none'; 
     const aboutSection = document.querySelector('.about');
-    aboutSection.classList.add('hidden'); // Cacher la section about 
+    aboutSection.classList.add('hidden');  
     const quizSection = document.querySelector('.quiz');
-    quizSection.style.display = 'none';   // Cacher la section quiz
+    quizSection.style.display = 'none';   
     loadLastScore();
 });
 
@@ -189,7 +189,7 @@ function showQuestion() {
     // Cacher le bouton suivant
     nextButton.style.display = 'none';
 
-    // Vérifier si nous avons encore des questions
+    // berifier si nous avons encore des questions
     if (currentQuestionIndex < questions.length) {
         const currentQuestion = questions[currentQuestionIndex];
         
@@ -205,7 +205,7 @@ function showQuestion() {
             optionsList.appendChild(button);
         });
 
-        // Mettre à jour le numéro de la question
+        // Mettre a jour le numero de la question
         document.querySelector('.page-number').textContent = 
             `${currentQuestionIndex + 1}/${questions.length}`;
     }
@@ -232,10 +232,11 @@ function nextQuestion() {
 
 
 // Event listeners
+
 document.querySelector('.btn_about').addEventListener('click', startQuiz);
 document.querySelector('.next-button').addEventListener('click', nextQuestion);
 document.querySelector('.redemarer').addEventListener('click', startQuiz);
-// document.querySelector('.accueil').addEventListener('click', startQuiz);
+
 
 
 
@@ -328,7 +329,7 @@ document.querySelector('.btn_about').addEventListener('click', function(e) {
 });
 
 document.querySelector('.redemarer').addEventListener('click', function(e) {
-    e.preventDefault(); // pour le botton home 
+    e.preventDefault(); // pour le botton redemarer
     scrollToSection('quiz');
 });
 
@@ -367,7 +368,7 @@ function saveScore(score, maxScore) {
     }));
 }
 
-// Fonction pour charger et afficher le dernier score
+// fonction pour charger et afficher le dernier score
 // **************************************************
 
 
