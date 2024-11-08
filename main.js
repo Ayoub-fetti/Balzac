@@ -369,11 +369,13 @@ function saveScore(score, maxScore) {
 
 // Fonction pour charger et afficher le dernier score
 // **************************************************
+
+
 function loadLastScore() {
     const lastScoreElement = document.querySelector('.last_score');
     const lastScoreData = JSON.parse(localStorage.getItem('lastScore'));
     
-    // Cacher par défaut lors de la première visite
+    // Cacher par defaut lors de la premiere visite
     lastScoreElement.style.display = 'none';
     
     if (lastScoreData) {
@@ -397,33 +399,35 @@ function generatePDF() {
     const lineHeight = 15; // Espace entre les lignes
     const pageHeight = 280; // Hauteur d'une page A4 (en mm)
 
-    // Liste des questions, réponses et résultats
+    // liste des questions, reponses et resultats
     questions.forEach((question, index) => {
         doc.setFontSize(12);
         
-        // Texte des questions et réponses
+        // texte des questions et reponses
         doc.text(`Question ${index + 1}: ${question.question}`, 15, yPosition);
         doc.text(`Votre réponse: ${userAnswers[index]}`, 15, yPosition + lineHeight);
         doc.text(`Réponse correcte: ${question.answer}`, 15, yPosition + 2 * lineHeight);
         
-        // Mise à jour de la position verticale pour la prochaine entrée
+        // mise a jour de la position verticale pour la prochaine entrée
         yPosition += 3 * lineHeight;
 
-        // Passer à une nouvelle page si on dépasse la hauteur de la page
+        // Passer a une nouvelle page si on depasse la hauteur de la page
         if (yPosition > pageHeight - 15) { 
             doc.addPage();
             yPosition = 15; // Repositionner en haut de la nouvelle page
         }
     });
 
-    // Passer à la deuxième page pour le score et niveau
+    // Passer a la deuxieme page pour le score et niveau
     doc.addPage();
     doc.setFontSize(16);
     doc.text(`Score total: ${score}/${questions.length * 2}`, 15, 30);
     doc.text(`Niveau atteint: ${determineLevel(score)}`, 15, 50);
 
-    // Téléchargement du PDF
+    // telechargement du PDF
     doc.save('rapport_quiz.pdf');
 }
+
+
 
 
