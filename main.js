@@ -2,10 +2,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultSection = document.querySelector('.result');
     resultSection.style.display = 'none'; // Cacher la section result
     const aboutSection = document.querySelector('.about');
-    aboutSection.classList.add('hidden'); // Cacher la section about au chargement
+    aboutSection.classList.add('hidden'); // Cacher la section about 
     const quizSection = document.querySelector('.quiz');
-    quizSection.style.display = 'none';   // Cacher la section quiz au chargement
+    quizSection.style.display = 'none';   // Cacher la section quiz
+    loadLastScore();
 });
+
 
 const questions = [
     {
@@ -104,13 +106,40 @@ const questions = [
 let currentQuestionIndex = 0;
 let score = 0;
 
-// Function demerer le quiz
+// Function demarer le quiz & les questions sont par oordre aleatoire
+// ****************************************
+
+
 function startQuiz() {
+    
+    const shuffledQuestions = shuffleArray([...questions]); // copie pour original array 
+    
+    // Remplacez le tableau de questions global par le tableau melange
+
+    questions.length = 0; // Vide le tableau original
+    questions.push(...shuffledQuestions); // ajoute les questions melange
+    
     score = 0;
     currentQuestionIndex = 0;
     document.querySelector('.quiz').style.display = 'flex';
     showQuestion();
 }
+
+// fonction pour melanger les questions 
+// *************************************
+
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+
+// fonction pour verifier la reponse correcte ou incorrecte 
+// ****************************************
 
 function checkAnswer(selectedOption) {
     clearInterval(timer);
@@ -136,6 +165,9 @@ function checkAnswer(selectedOption) {
 
 
 // Function pour la premier question
+// ********************************************
+
+
 function showQuestion() {
     const questionHeader = document.querySelector('.question-header h2');
     const optionsList = document.querySelector('.options-list');
@@ -174,6 +206,9 @@ function showQuestion() {
 }
 
 // Function pour passer a la question suivant
+// ******************************************
+
+
 function nextQuestion() {
     currentQuestionIndex++;
 
@@ -206,11 +241,16 @@ function scrollToSection(sectionId) {
 
 
 // fonction pour afficher le resultat 
+// ***********************************
+
+
+
 function showResult() {
     clearInterval(timer);
     const quizSection = document.querySelector('.quiz');
     const resultSection = document.querySelector('.result');
     const certificateDiv = resultSection.querySelector('.certificate');
+    const lastScoreElement = document.querySelector('.last_score');
     
     quizSection.style.display = 'none';
     resultSection.style.display = 'flex';
@@ -220,6 +260,13 @@ function showResult() {
     const correctAnswers = score / 2;
     const incorrectAnswers = totalQuestions - correctAnswers;
     const level = determineLevel(score);
+
+    // Sauvegarde du score
+    saveScore(score, maxScore);
+
+    // Mettre à jour et afficher le dernier score
+    lastScoreElement.innerHTML = `Votre dernier score : <span class="last_note">${score}/${maxScore}</span>`;
+    lastScoreElement.style.display = 'block'; // Assurez-vous que c'est visible
 
     certificateDiv.innerHTML = `
         <h1 class="votre">Votre résultat :</h1>
@@ -237,6 +284,8 @@ function showResult() {
 }
 
 // fonction pour determiner le level
+// *********************************
+
 function determineLevel(score) {
     if (score <= 4) return "A1";
     if (score <= 11) return "A2";
@@ -290,5 +339,30 @@ function startTimer() {
     }, 1000);
 }
 
+
+// Fonction pour sauvegarder le score
+// **************************************
+function saveScore(score, maxScore) {
+    localStorage.setItem('lastScore', JSON.stringify({
+        score: score,
+        maxScore: maxScore,
+        date: new Date().toLocaleString()
+    }));
+}
+
+// Fonction pour charger et afficher le dernier score
+// **************************************************
+function loadLastScore() {
+    const lastScoreElement = document.querySelector('.last_score');
+    const lastScoreData = JSON.parse(localStorage.getItem('lastScore'));
+    
+    // Cacher par défaut lors de la première visite
+    lastScoreElement.style.display = 'none';
+    
+    if (lastScoreData) {
+        lastScoreElement.innerHTML = `Votre dernier score : <span class="last_note">${lastScoreData.score}/${lastScoreData.maxScore}</span>`;
+        lastScoreElement.style.display = 'block'; // Afficher seulement s'il y a un score précédent
+    }
+}
 
 

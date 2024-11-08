@@ -335,4 +335,15 @@ a:hover{
 .hidden {
     display: none;
 }
+.last_score{
+    color: #0084FF;
+    margin-top: 40px;
+    margin-left: 110px;
+    font-weight: 700;
+    font-size: larger;
+    display: none;
+}
+.last_note{
+    color: #436D95;
+}
 
