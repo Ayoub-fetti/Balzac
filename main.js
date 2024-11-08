@@ -8,6 +8,15 @@ document.addEventListener('DOMContentLoaded', () => {
     loadLastScore();
 });
 
+// tableau pour stocker toute  les reponses correcte ou incorrecte
+// ********************************** 
+
+let userAnswers = [];
+
+// database des questions 
+// ******************************************
+
+
 
 const questions = [
     {
@@ -144,6 +153,7 @@ function shuffleArray(array) {
 function checkAnswer(selectedOption) {
     clearInterval(timer);
     const currentQuestion = questions[currentQuestionIndex];
+    userAnswers[currentQuestionIndex] = selectedOption; // stocker les reponses des utilisateur 
     const optionButtons = document.querySelectorAll('.option-item');
     const nextButton = document.querySelector('.next-button');
     
@@ -281,6 +291,13 @@ function showResult() {
 
     const restartButton = document.querySelector('.redemarer');
     restartButton.addEventListener('click', startQuiz);
+   
+    // creer un button pour pdf
+    const downloadButton = document.createElement('button');
+    downloadButton.textContent = 'Télécharger le rapport PDF';
+    downloadButton.className = 'download-report';
+    downloadButton.addEventListener('click', generatePDF);
+    resultSection.appendChild(downloadButton);
 }
 
 // fonction pour determiner le level
@@ -363,6 +380,50 @@ function loadLastScore() {
         lastScoreElement.innerHTML = `Votre dernier score : <span class="last_note">${lastScoreData.score}/${lastScoreData.maxScore}</span>`;
         lastScoreElement.style.display = 'block'; // Afficher seulement s'il y a un score précédent
     }
+}
+
+// fonction pour generer un pdf 
+// ********************************
+
+function generatePDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    doc.setFontSize(18);
+    doc.text('Rapport de test', 20, 20);
+
+    // Configuration de la position initiale
+    let yPosition = 30;
+    const lineHeight = 15; // Espace entre les lignes
+    const pageHeight = 280; // Hauteur d'une page A4 (en mm)
+
+    // Liste des questions, réponses et résultats
+    questions.forEach((question, index) => {
+        doc.setFontSize(12);
+        
+        // Texte des questions et réponses
+        doc.text(`Question ${index + 1}: ${question.question}`, 15, yPosition);
+        doc.text(`Votre réponse: ${userAnswers[index]}`, 15, yPosition + lineHeight);
+        doc.text(`Réponse correcte: ${question.answer}`, 15, yPosition + 2 * lineHeight);
+        
+        // Mise à jour de la position verticale pour la prochaine entrée
+        yPosition += 3 * lineHeight;
+
+        // Passer à une nouvelle page si on dépasse la hauteur de la page
+        if (yPosition > pageHeight - 15) { 
+            doc.addPage();
+            yPosition = 15; // Repositionner en haut de la nouvelle page
+        }
+    });
+
+    // Passer à la deuxième page pour le score et niveau
+    doc.addPage();
+    doc.setFontSize(16);
+    doc.text(`Score total: ${score}/${questions.length * 2}`, 15, 30);
+    doc.text(`Niveau atteint: ${determineLevel(score)}`, 15, 50);
+
+    // Téléchargement du PDF
+    doc.save('rapport_quiz.pdf');
 }
 
 
