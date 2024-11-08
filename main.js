@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     const resultSection = document.querySelector('.result');
-    resultSection.style.display = 'none'; // Cacher la section des résultats au début
+    resultSection.style.display = 'none'; // Cacher la section result
+    const aboutSection = document.querySelector('.about');
+    aboutSection.classList.add('hidden'); // Cacher la section about au chargement
+    const quizSection = document.querySelector('.quiz');
+    quizSection.style.display = 'none';   // Cacher la section quiz au chargement
 });
 
 const questions = [
@@ -11,7 +15,7 @@ const questions = [
             "Paris",
             "Lyon"
         ],
-        answer: "Paris" // reponse correcte
+        answer: "Paris" 
     },
     {
         question: "Quel est l'article défini pour le mot (chien) ?",
@@ -59,7 +63,7 @@ const questions = [
         answer: "J'ai mangé" 
     },
     {
-        question: "Quelle est la traduction de cat en français ?",
+        question: "Quelle est la traduction de (cat) en français ?",
         options: [
             "Chien",
             "Chat",
@@ -124,7 +128,7 @@ function checkAnswer(selectedOption) {
     });
 
     if (selectedOption === currentQuestion.answer) {
-        score += 2; // Attribue 2 points par réponse correcte
+        score += 2; // 2 pts pour la reponse correcte
     }
 
     nextButton.style.display = 'block';
@@ -137,7 +141,7 @@ function showQuestion() {
     const optionsList = document.querySelector('.options-list');
     const nextButton = document.querySelector('.next-button');
     
-    // Vider la liste des options précédentes
+    // Vider la liste des options precedent
     optionsList.innerHTML = '';
     
     // Cacher le bouton suivant
@@ -200,6 +204,7 @@ function scrollToSection(sectionId) {
     }
 }
 
+
 // fonction pour afficher le resultat 
 function showResult() {
     clearInterval(timer);
@@ -244,7 +249,9 @@ function determineLevel(score) {
 
 
 document.querySelector('.button_home').addEventListener('click', function(e) {
-    e.preventDefault(); // pour le botton home 
+    e.preventDefault();
+    const aboutSection = document.querySelector('.about');
+    aboutSection.classList.remove('hidden'); // Afficher la section about
     scrollToSection('about');
 });
 
@@ -282,4 +289,6 @@ function startTimer() {
         }
     }, 1000);
 }
+
+
 

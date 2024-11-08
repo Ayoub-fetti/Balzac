@@ -331,3 +331,8 @@ a:hover{
 .level{
     color: #0084FF;
 }
+
+.hidden {
+    display: none;
+}
+
