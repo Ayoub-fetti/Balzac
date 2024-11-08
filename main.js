@@ -20,13 +20,13 @@ let userAnswers = [];
 
 const questions = [
     {
-        question: "Quelle est la capitale de la France ?",
+        question: "Quelle est la bonne conjugaison pour il (faire) ?",
         options: [
-            "Marseille",
-            "Paris",
-            "Lyon"
+            "Il faisait",
+            "Il fera",
+            "Il faisait"
         ],
-        answer: "Paris" 
+        answer: "Il fera" 
     },
     {
         question: "Quel est l'article défini pour le mot (chien) ?",
