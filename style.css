@@ -354,5 +354,64 @@ a:hover{
     border: 1px solid #0084FF;
 }
 
+@media (max-width: 600px) {
+    .header {
+        display: none; 
+    }
+
+    footer {
+        display: none;
+    }
+
+    .home {
+        display: grid; 
+        grid-template-columns: 1fr; /* Une seule colonne */
+        padding: 20px; 
+    }
+
+    .svg_home {
+        display: none;
+      
+    }
+
+    .about, .quiz, .result {
+        display: grid; /* Utilise le grid pour les autres sections */
+        grid-template-columns: 1fr; /* Une seule colonne */
+        padding: 20px; /* Ajuste le padding */
+        margin-right: 20px;
+    }
+
+    .cart, .survey-container, .certificate {
+        width: 90%; /* Ajuste la largeur pour s'adapter à l'écran */
+        margin: 0 auto; /* Centre les éléments */
+    }
+    .grand_titre{
+        padding-top: 30px;
+        padding-left: 50px;
+        font-weight: 800;
+        font-size: 50px;
+        color: #0084FF;
+        text-align: center;
+        margin-right: 80px;
+    }
+    .grand_prg{
+        padding-left: 50px;
+        padding-top: 20px;
+        text-align: center;
+        font-size: x-large;
+        color: #436D95;
+        margin-right: 100px;
+    }
+    .button_home{
+        height: 60px;
+        width: 200px;
+        margin-top: 150px;
+        margin-left: 200px;
+    }
+    .last_score{
+        margin-left: 200px;
+    }
+}
+
 
 
